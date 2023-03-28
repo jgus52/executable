@@ -14,9 +14,20 @@ configurations {
 	}
 }
 
-//task executable(type: Exec){
-//	commandLine "ls", "-la"
-//}
+class MyTask extends DefaultTask {
+
+	@TaskAction
+	def execute() {
+		def cmd = ["ls", "-la"]
+		def process = new ProcessBuilder(cmd).start()
+		process.waitFor()
+		println process.inputStream.text
+	}
+}
+
+task customTask(type: MyTask)
+
+build.dependsOn customTask
 
 repositories {
 	mavenCentral()
