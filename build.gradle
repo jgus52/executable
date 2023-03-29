@@ -14,29 +14,16 @@ configurations {
 	}
 }
 
-task notExecutable{
-	println "notExecutable"
-}
+task runProcess {
+	doLast {
+		ProcessBuilder pb = new ProcessBuilder(["ls"])
+		Process process = pb.start()
 
-task executableTask
+		process.waitFor()
 
-
-
-
-
-{
-	exec {
-		commandLine "ls", "-la"
+		println(process.inputStream.text)
 	}
 }
-
-task notExecutable2
-{
-	println "notExecutable"
-}
-
-task executableTask2 { exec { commandLine "./hello.sh"  } }
-
 
 repositories {
 	mavenCentral()
